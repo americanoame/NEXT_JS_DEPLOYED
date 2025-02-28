@@ -1,4 +1,4 @@
-# Next 15, React 19, TypeScript, PostgreSQL and Prisma to build a real-world ecommerce website
+### Next 15, React 19, TypeScript, PostgreSQL and Prisma. Real-world ecommerce website
 
 <table>
   <tr>
