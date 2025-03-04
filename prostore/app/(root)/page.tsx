@@ -6,9 +6,6 @@ const HomePage = async () => {
 
   const latestProducts = await getLatestProducts();
 
-  console.log(latestProducts)
-
-
   return (
     <div className='space-y-8'>
       <ProductList title='Newest Arrivals' data={latestProducts} 
