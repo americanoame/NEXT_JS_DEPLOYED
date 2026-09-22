@@ -13,21 +13,27 @@ import CredentialsSignInForm from "./credentials-signin-form";
 import { auth } from '@/auth';
 import { redirect } from "next/navigation";
 
+
+// The title will be used by Next.js to set the page’s title in the browser tab and improve SEO.
 export const metadata: Metadata = {
   title: "Sign In",
 };
 
+
+// Accepts props, which contains searchParams (a promise)
 const SignIn = async (props: {
   searchParams: Promise<{
     callbackUrl: string;
   }>;
 }) => {
 
+ // Extract the callback URL from the search parameters (used for redirection after login) (URL encoded)
   const { callbackUrl } = await props.searchParams;
 
+ // Check if the user has an active session
   const session = await auth();
-
-
+  
+// If a session exists, log a message and redirect the user to the callback URL or home page
   if (session) {
     console.log("Redirecting to home page...");
     return redirect(callbackUrl || '/');

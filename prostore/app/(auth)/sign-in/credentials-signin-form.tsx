@@ -6,24 +6,33 @@ import { Label } from "@/components/ui/label";
 import { signInDefaultValues } from "@/lib/constants";
 import Link from "next/link";
 
-import { useActionState } from "react";
-import { useFormStatus } from "react-dom";
-import { signInWithCredentials } from "@/lib/actions/user.actions";
+import { useActionState } from "react";  // Manages form submission state
+import { useFormStatus } from "react-dom"; // Tracks form status (pending)
+import { signInWithCredentials } from "@/lib/actions/user.actions"; // Function to handle sign-in
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation"; // Retrieves query parameters from the URL
 
-const CredentialsSignInForm = () => {
+
+const CredentialsSignInForm = () => {  // Defines the sign-in form component
+
+  // useActionState stores sign-in result (success & message)
+  // useActionState stores sign-in result (success & message)
   const [data, action] = useActionState(signInWithCredentials, {
     success: false,
     message: "",
   });
 
+  // Extracts callbackUrl from URL params or (fallback is /)
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
 
+
   const SignInButton = () => {
+    // Checks if the form is pending (useFormStatus)
     const { pending } = useFormStatus();
     return (
+
+      // Disables the button while signing in
       <Button disabled={pending} className="w-full" variant="default">
         {pending ? "Signing In..." : "Sign In"}
       </Button>
@@ -31,6 +40,7 @@ const CredentialsSignInForm = () => {
   };
 
   return (
+    // Submits form using action (calls signInWithCredentials)
     <form action={action}>
     
     <input type='hidden' name='callbackUrl' value={callbackUrl} />
@@ -62,6 +72,7 @@ const CredentialsSignInForm = () => {
           <SignInButton />
         </div>
 
+        {/* Displays error message if sign-in fails  */}
         {data && !data.success && (
           <div className="text-center text-destructive">{data.message}</div>
         )}
